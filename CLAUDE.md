@@ -27,8 +27,13 @@ The challenge is to identify the city with as few tries as possible.
 - Uses OSMnx 1.x API (`geometries_from_point`, `graph_from_point`)
 
 ### City Selection (`city_selector.py`)
-- Uses GeoNames cities15000 dataset (~2,300 cities with pop > 250K)
-- `load_cities(min_population=250000)` - loads and filters city data
+- Uses GeoNames cities15000 dataset
+- **TEMPORARY FOR USER TESTING**: Currently filtered to US/UK cities only for initial testing
+  - US cities: population >= 100,000 (356 cities)
+  - UK cities: population >= 250,000 (31 cities)
+  - Total: 387 cities (~1 year of content)
+  - Plan to expand globally or add difficulty modes based on user feedback
+- `load_cities()` - loads and filters city data with custom country/population thresholds
 - `get_daily_city(cities, date)` - deterministic selection based on date (same city for everyone)
 - City dict includes: name, country, continent, lat, lng, population, admin (state code)
 - `COUNTRY_TO_CONTINENT` mapping for ~70 countries to their continents
