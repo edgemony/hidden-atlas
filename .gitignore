@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+
+# Generated maps
+public/maps/
+output/
+output_*/
+cache/
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-*
+
+# Data (large files)
+# Keep the cities15000.txt in git for now, but could exclude if too large
+# data/cities15000.txt
+
+# Logs
+*.log
+
+# Temporary files
+nul

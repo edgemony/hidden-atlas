@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citydle - Daily City Guessing Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CITYDLE</h1>
+            <p class="tagline">Guess the city from the map</p>
+        </header>
+
+        <div class="game-info">
+            <div class="info-item">
+                <span class="label">Attempt:</span>
+                <span class="value" id="attempt">1/5</span>
+            </div>
+            <div class="info-item">
+                <span class="label">Level:</span>
+                <span class="value" id="level">1</span>
+            </div>
+        </div>
+
+        <div class="game-area">
+            <div class="map-container">
+                <img id="map-image" src="" alt="City map - Level 1">
+                <div id="loading" class="loading">Loading map...</div>
+            </div>
+        </div>
+
+        <div id="hints-panel" class="hints-panel hidden">
+            <div id="hint-1" class="hint hidden">
+                <span class="hint-label">Hint 1</span>
+                <span class="hint-value">Continent: <strong id="hint-continent"></strong></span>
+            </div>
+            <div id="hint-2" class="hint hidden">
+                <span class="hint-label">Hint 2</span>
+                <span class="hint-value">Country: <strong id="hint-country"></strong></span>
+            </div>
+        </div>
+
+        <div class="game-controls">
+            <div class="input-group">
+                <input
+                    type="text"
+                    id="city-input"
+                    placeholder="Enter city name..."
+                    autocomplete="off"
+                    spellcheck="false"
+                >
+                <button id="submit-btn">Submit Guess</button>
+            </div>
+            <div id="message" class="message"></div>
+        </div>
+
+        <div class="attempts-list">
+            <h3>Your Guesses</h3>
+            <ul id="guesses"></ul>
+        </div>
+
+        <div id="game-over" class="game-over hidden">
+            <div class="game-over-content">
+                <h2 id="game-over-title"></h2>
+                <p id="game-over-message"></p>
+                <p class="reveal">The city was: <strong id="correct-city"></strong></p>
+
+                <div id="bonus-round" class="bonus-round hidden">
+                    <h3>Bonus Round!</h3>
+                    <p class="bonus-prompt">Can you guess the population?</p>
+                    <div class="bonus-input-group">
+                        <input type="text" id="population-input" placeholder="e.g., 500000" autocomplete="off">
+                        <button id="population-submit">Submit</button>
+                    </div>
+                    <p id="bonus-result" class="bonus-result"></p>
+                </div>
+
+                <div class="game-over-buttons">
+                    <button id="share-btn">Share Results</button>
+                    <button id="replay-btn" class="replay-btn">Replay for Fun!</button>
+                    <button id="view-all-btn" class="view-all-btn">See All Maps</button>
+                </div>
+                <p class="next-game">Next city in: <span id="countdown"></span></p>
+            </div>
+        </div>
+
+        <div id="all-maps-modal" class="modal hidden">
+            <div class="modal-content all-maps-content">
+                <span class="close">&times;</span>
+                <h2>All Map Levels</h2>
+                <div class="maps-grid">
+                    <div class="map-item" data-level="1">
+                        <h3>Level 1</h3>
+                        <p class="map-description">Water + Highways</p>
+                        <img src="" alt="Level 1" class="grid-map-image">
+                    </div>
+                    <div class="map-item" data-level="2">
+                        <h3>Level 2</h3>
+                        <p class="map-description">Street Grid</p>
+                        <img src="" alt="Level 2" class="grid-map-image">
+                    </div>
+                    <div class="map-item" data-level="3">
+                        <h3>Level 3</h3>
+                        <p class="map-description">Parks</p>
+                        <img src="" alt="Level 3" class="grid-map-image">
+                    </div>
+                    <div class="map-item" data-level="4">
+                        <h3>Level 4</h3>
+                        <p class="map-description">Buildings</p>
+                        <img src="" alt="Level 4" class="grid-map-image">
+                    </div>
+                    <div class="map-item" data-level="5">
+                        <h3>Level 5</h3>
+                        <p class="map-description">Full Map</p>
+                        <img src="" alt="Level 5" class="grid-map-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="map-zoom-modal" class="modal hidden">
+            <div class="modal-content map-zoom-content">
+                <span class="close">&times;</span>
+                <h2 id="zoom-title">Level 1</h2>
+                <img id="zoom-image" src="" alt="Zoomed map">
+            </div>
+        </div>
+
+        <div class="how-to-play">
+            <button id="help-btn">How to Play</button>
+        </div>
+
+        <div id="help-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>How to Play</h2>
+                <div class="instructions">
+                    <p>Guess the featured city in 5 tries or less!</p>
+                    <ol>
+                        <li><strong>Level 1:</strong> Water bodies + major highways (abstract)</li>
+                        <li><strong>Level 2:</strong> Full street grid added</li>
+                        <li><strong>Level 3:</strong> Parks (green areas) revealed</li>
+                        <li><strong>Level 4:</strong> Buildings + top 3 major roads highlighted</li>
+                        <li><strong>Level 5:</strong> Full map with labeled roads</li>
+                    </ol>
+                    <p>Each incorrect guess reveals the next level. Try to identify the city with as few attempts as possible!</p>
+                    <p class="daily-note">A new city is featured every day at midnight UTC.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
