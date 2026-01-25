@@ -10,7 +10,7 @@ env/
 ENV/
 
 # Generated maps
-public/maps/
+# public/maps/  # Now tracking maps in git for deployment
 output/
 output_*/
 cache/
