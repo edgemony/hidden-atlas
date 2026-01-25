@@ -57,6 +57,16 @@ Progressive hints revealed after wrong guesses:
 - Hints persist across page refreshes via game state
 - Responsive: stacks vertically on mobile
 
+### Play Past Dates (`game.js`)
+After completing the daily game, players can play previous dates:
+- **Date Picker Modal**: Opens after game over, allows selecting any past date up to today
+- **Dynamic Loading**: Fetches `/maps/YYYY-MM-DD/city.json` for selected date
+- **Full Reset**: Loads that date's city and resets all game state (level, attempts, guesses)
+- **Error Handling**: Shows friendly message if no maps exist for selected date
+- **Modern UI**: Styled date picker with gradient button, shadows, and smooth animations
+- **Ephemeral**: Past date games don't save to localStorage - only today's daily game persists
+- **Return to Daily**: Refresh page to return to today's game
+
 ### Web Hosting
 - Simple web frontend to display the game
 - Track user's current attempt
@@ -86,6 +96,7 @@ Progressive hints revealed after wrong guesses:
 - [x] Hints layout optimization - separate row preserves map size, larger fonts
 - [x] Continent mapping for all countries in dataset
 - [x] Finish Web frontend - most already complete
+- [x] Play past dates feature - date picker modal after game over to play any previous date
 
 ### TODO
 - [x] **RENAME PROJECT**: Citydle → Hidden Atlas
@@ -109,6 +120,7 @@ Progressive hints revealed after wrong guesses:
 
 ## Development Notes
 - Python venv is in `.venv` folder
+- Run development server: `python serve.py` (serves `public/` on http://localhost:8000)
 - Run map generation: `python map_generator.py` (uses Portland, OR by default)
 - Generate daily maps: `python generate_daily_maps.py --date 2026-01-25` (specific date)
 - Generate next 7 days: `python generate_daily_maps.py --days 7`
