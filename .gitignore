@@ -36,3 +36,6 @@ Thumbs.db
 
 # Temporary files
 nul
+
+# Local notes
+git_tips.md

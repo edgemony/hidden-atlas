@@ -536,6 +536,131 @@ function setupHelpModal() {
     });
 }
 
+// Show date picker modal
+function showDatePicker() {
+    const modal = document.getElementById('date-picker-modal');
+    const dateInput = document.getElementById('date-picker-input');
+    const errorEl = document.getElementById('date-picker-error');
+
+    // Set max date to today
+    const today = new Date();
+    dateInput.max = today.toISOString().split('T')[0];
+
+    // Clear any previous error
+    errorEl.classList.add('hidden');
+    errorEl.textContent = '';
+
+    modal.classList.remove('hidden');
+}
+
+// Load game for a specific date
+async function loadDateGame(dateStr) {
+    const errorEl = document.getElementById('date-picker-error');
+
+    // Validate date format
+    if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+        errorEl.textContent = 'Please select a valid date';
+        errorEl.classList.remove('hidden');
+        return;
+    }
+
+    // Try to fetch city data for that date
+    try {
+        const response = await fetch(`/maps/${dateStr}/city.json`);
+        if (!response.ok) {
+            errorEl.textContent = 'No game available for this date';
+            errorEl.classList.remove('hidden');
+            return;
+        }
+
+        const cityData = await response.json();
+
+        // Reset game state for new date
+        gameState.todayDate = dateStr;
+        gameState.currentLevel = 1;
+        gameState.attempts = 0;
+        gameState.guesses = [];
+        gameState.gameOver = false;
+        gameState.won = false;
+        gameState.correctCity = cityData;
+        gameState.bonusRoundComplete = false;
+        gameState.bonusGuess = null;
+        gameState.bonusAccuracy = null;
+
+        // Close modals
+        document.getElementById('date-picker-modal').classList.add('hidden');
+        document.getElementById('game-over').classList.add('hidden');
+
+        // Re-enable inputs
+        const input = document.getElementById('city-input');
+        const submitBtn = document.getElementById('submit-btn');
+        input.disabled = false;
+        submitBtn.disabled = false;
+
+        // Reset bonus round inputs
+        const bonusRoundEl = document.getElementById('bonus-round');
+        const bonusInput = document.getElementById('population-input');
+        const bonusSubmitBtn = document.getElementById('population-submit');
+        const bonusResult = document.getElementById('bonus-result');
+        bonusRoundEl.classList.add('hidden');
+        bonusInput.value = '';
+        bonusInput.disabled = false;
+        bonusSubmitBtn.disabled = false;
+        bonusResult.textContent = '';
+        bonusResult.className = 'bonus-result';
+
+        // Reset hints
+        resetHints();
+
+        // Update UI and load map
+        updateUI();
+        loadMapImage();
+
+        // Clear message
+        document.getElementById('message').textContent = '';
+        document.getElementById('message').className = 'message';
+
+        // Focus input
+        input.focus();
+
+    } catch (error) {
+        console.error('Error loading date game:', error);
+        errorEl.textContent = 'Error loading game. Try another date.';
+        errorEl.classList.remove('hidden');
+    }
+}
+
+// Setup date picker modal
+function setupDatePickerModal() {
+    const modal = document.getElementById('date-picker-modal');
+    const btn = document.getElementById('past-game-btn');
+    const close = modal.querySelector('.close');
+    const playBtn = document.getElementById('date-picker-play');
+    const dateInput = document.getElementById('date-picker-input');
+
+    btn.addEventListener('click', showDatePicker);
+
+    playBtn.addEventListener('click', () => {
+        loadDateGame(dateInput.value);
+    });
+
+    dateInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            loadDateGame(dateInput.value);
+        }
+    });
+
+    close.addEventListener('click', () => {
+        modal.classList.add('hidden');
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.add('hidden');
+        }
+    });
+}
+
 // Reset game for replay
 function resetGame() {
     // Reset game state
@@ -629,6 +754,7 @@ async function initGame() {
     setupAllMapsModal();
     setupMapZoomModal();
     setupBonusRound();
+    setupDatePickerModal();
 
     // Focus input
     if (!gameState.gameOver) {

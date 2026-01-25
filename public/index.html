@@ -81,6 +81,7 @@
                     <button id="share-btn">Share Results</button>
                     <button id="replay-btn" class="replay-btn">Replay for Fun!</button>
                     <button id="view-all-btn" class="view-all-btn">See All Maps</button>
+                    <button id="past-game-btn" class="past-game-btn">Play Past Date</button>
                 </div>
                 <p class="next-game">Next city in: <span id="countdown"></span></p>
             </div>
@@ -148,6 +149,17 @@
                     <p>Each incorrect guess reveals the next level. Try to identify the city with as few attempts as possible!</p>
                     <p class="daily-note">A new city is featured every day at midnight UTC.</p>
                 </div>
+            </div>
+        </div>
+
+        <div id="date-picker-modal" class="modal hidden">
+            <div class="modal-content date-picker-content">
+                <span class="close">&times;</span>
+                <h2>Play Past Game</h2>
+                <p>Select a date to play that day's city:</p>
+                <input type="date" id="date-picker-input">
+                <button id="date-picker-play">Play</button>
+                <p id="date-picker-error" class="error-message hidden"></p>
             </div>
         </div>
     </div>
