@@ -94,7 +94,11 @@ def get_continent(country_code: str) -> str:
 
 def load_cities(min_population: int = 250000) -> list[dict]:
     """
-    Load cities from GeoNames cities15000.txt and filter by population.
+    Load cities from GeoNames cities15000.txt and filter by country/population.
+
+    Custom filtering:
+    - US cities: population >= 100,000
+    - UK cities: population >= 250,000
 
     GeoNames format (tab-separated):
     0: geonameid, 1: name, 2: asciiname, 3: alternatenames, 4: latitude,
@@ -119,8 +123,16 @@ def load_cities(min_population: int = 250000) -> list[dict]:
                     continue
 
                 pop = int(fields[14])
-                if pop >= min_population:
-                    country_code = fields[8]
+                country_code = fields[8]
+
+                # Custom filtering by country
+                include = False
+                if country_code == 'US' and pop >= 100000:
+                    include = True
+                elif country_code == 'GB' and pop >= 250000:
+                    include = True
+
+                if include:
                     cities.append({
                         'name': fields[1],
                         'name_ascii': fields[2],
