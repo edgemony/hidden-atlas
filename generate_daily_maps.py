@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Generate maps for the daily Citydle game.
+Generate maps for the daily Hidden Atlas game.
 
 This script generates map images for a given date and saves them
 in the public/maps/YYYY-MM-DD/ directory for the web frontend.
@@ -91,7 +91,7 @@ def generate_next_n_days(n=7, output_dir="public/maps"):
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="Generate Citydle maps")
+    parser = argparse.ArgumentParser(description="Generate Hidden Atlas maps")
     parser.add_argument(
         '--days',
         type=int,

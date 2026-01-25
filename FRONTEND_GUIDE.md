@@ -1,8 +1,8 @@
-# Citydle Frontend - Quick Start Guide
+# Hidden Atlas Frontend - Quick Start Guide
 
 ## What I've Created
 
-A complete frontend for Citydle with:
+A complete frontend for Hidden Atlas with:
 - **HTML/CSS/JS game interface** in `public/` folder
 - **Map generation script** to create daily city maps
 - **Development server** for local testing
@@ -183,4 +183,4 @@ Check the files:
 - `CLAUDE.md` - Overall project docs
 - Look at the code - it's well-commented!
 
-Enjoy building Citydle!
+Enjoy building Hidden Atlas!

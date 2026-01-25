@@ -1,7 +1,7 @@
 ﻿from setuptools import setup, find_packages
 
 setup(
-    name='citydle',
+    name='hidden-atlas',
     version='0.1',
     description='A game based on city maps and geography',
     author='PortlandGames',
@@ -15,7 +15,7 @@ setup(
     python_requires='>=3.6',
     include_package_data=True,
     package_data={
-        'citydle': ['data/*.txt'],
+        'hidden_atlas': ['data/*.txt'],
     },
     classifiers=[
         'Development Status :: 3 - Alpha',

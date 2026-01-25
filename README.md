@@ -1,4 +1,4 @@
-# Citydle
+# Hidden Atlas
 
 **A daily geography guessing game.** Identify cities from progressively revealing map clues in 5 attempts or less!
 
@@ -36,7 +36,7 @@ You have 5 attempts to guess the city. Each wrong guess reveals more detail:
 
 ### Quick Start
 
-Want to run Citydle locally, contribute, or fork it for your own version?
+Want to run Hidden Atlas locally, contribute, or fork it for your own version?
 
 #### Prerequisites
 - Python 3.9+
@@ -46,8 +46,8 @@ Want to run Citydle locally, contribute, or fork it for your own version?
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/citydle.git
-cd citydle
+git clone https://github.com/yourusername/hidden-atlas.git
+cd hidden-atlas
 ```
 
 2. Create a virtual environment and install dependencies:
@@ -79,7 +79,7 @@ Then visit http://localhost:8000
 ### Project Structure
 
 ```
-citydle/
+hidden-atlas/
 ├── public/              # Frontend (deploy this folder)
 │   ├── index.html      # Main game interface
 │   ├── styles.css      # Styling

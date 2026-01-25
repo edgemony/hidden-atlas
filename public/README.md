@@ -1,6 +1,6 @@
-# Citydle Frontend
+# Hidden Atlas Frontend
 
-Simple, clean web interface for the Citydle daily geography game.
+Simple, clean web interface for the Hidden Atlas daily geography game.
 
 ## Features
 

@@ -1,5 +1,5 @@
 """
-City selector for Citydle.
+City selector for Hidden Atlas.
 Handles loading city data, filtering, and daily city selection.
 """
 

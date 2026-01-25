@@ -20,7 +20,7 @@ function getTodayDate() {
 // Load game state from localStorage
 function loadGameState() {
     const today = getTodayDate();
-    const saved = localStorage.getItem('citydleState');
+    const saved = localStorage.getItem('hiddenAtlasState');
 
     if (saved) {
         const savedState = JSON.parse(saved);
@@ -38,7 +38,7 @@ function loadGameState() {
 
 // Save game state to localStorage
 function saveGameState() {
-    localStorage.setItem('citydleState', JSON.stringify(gameState));
+    localStorage.setItem('hiddenAtlasState', JSON.stringify(gameState));
 }
 
 // Fetch the current city data
@@ -272,7 +272,7 @@ function showGameOver() {
 // Share results
 function shareResults() {
     const emoji = gameState.won ? '🎯' : '❌';
-    let text = `Citydle ${gameState.todayDate}\n${emoji} ${gameState.attempts}/${gameState.maxAttempts}`;
+    let text = `Hidden Atlas ${gameState.todayDate}\n${emoji} ${gameState.attempts}/${gameState.maxAttempts}`;
 
     // Add bonus round result if completed
     if (gameState.bonusRoundComplete && gameState.bonusAccuracy) {

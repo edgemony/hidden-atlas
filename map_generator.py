@@ -1,5 +1,5 @@
 """
-Map generator prototype for Citydle.
+Map generator prototype for Hidden Atlas.
 Generates 5 detail levels of a city map using OpenStreetMap data.
 """
 

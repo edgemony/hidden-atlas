@@ -1,4 +1,4 @@
-# Citydle
+# Hidden Atlas
 
 A daily geography guessing game where players identify a city from progressively revealing map clues.
 
@@ -88,7 +88,24 @@ Progressive hints revealed after wrong guesses:
 - [x] Finish Web frontend - most already complete
 
 ### TODO
+- [x] **RENAME PROJECT**: Citydle → Hidden Atlas
+  - Update all documentation (README.md, CLAUDE.md, FRONTEND_GUIDE.md)
+  - Update HTML title and meta tags
+  - Update game title in index.html
+  - Rename GitHub repository (do this manually on GitHub)
+  - Update all internal references
+  - Commit and push changes
+- [ ] Generate maps for deployment (60-90 days)
+- [ ] Deploy to Vercel or Netlify
+- [ ] Set up automated map generation (GitHub Actions or cron)
+- [ ] Test deployed site with real gameplay
+- [ ] Update README.md with live URL once deployed
 - [ ] Clean up combined road names (e.g., "I 77;US 21" → "I-77")
+
+## GitHub Repository
+- **Repository**: https://github.com/edgemony/hidden-atlas
+- **Initial commit**: Complete game with frontend, map generation, and city selection
+- **Ready for**: Static site deployment (Vercel, Netlify, GitHub Pages)
 
 ## Development Notes
 - Python venv is in `.venv` folder
