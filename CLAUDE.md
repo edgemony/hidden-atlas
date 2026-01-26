@@ -54,8 +54,11 @@ After completing the main game (win or lose), players can guess the city's popul
 
 ### Hints System (`game.js`)
 Progressive hints revealed after wrong guesses:
-- **Hint 1** (after 2nd wrong guess, Level 3+): Shows continent
-- **Hint 2** (after 4th wrong guess, Level 5): Shows country
+- **Hint 1** (after 2nd wrong guess, Level 3+): Shows country
+- **Hint 2** (after 4th wrong guess, Level 5): Shows state/region (full state names for US, constituent countries for UK)
+- US state code to full name mapping (all 50 states + DC)
+- UK constituent countries mapping (England, Scotland, Wales, Northern Ireland)
+- Case-insensitive country matching handles variations ("USA" vs "United States")
 - Hints display in a separate row below map (Hint 1 left, Hint 2 right)
 - Map maintains full size regardless of hint visibility
 - Large, easy-to-read font sizes (1.2em for labels)
@@ -63,8 +66,11 @@ Progressive hints revealed after wrong guesses:
 - Responsive: stacks vertically on mobile
 
 ### Play Past Dates (`game.js`)
-After completing the daily game, players can play previous dates:
-- **Date Picker Modal**: Opens after game over, allows selecting any past date up to today
+Players can play previous dates at any time:
+- **Always Visible Button**: "Play Past Date" button appears at bottom of page next to "How to Play"
+- **Also in Game Over**: Date picker also accessible after completing daily game
+- **Date Validation**: Prevents selecting future dates using UTC-consistent logic
+- **Date Picker Modal**: Allows selecting any past date up to today
 - **Dynamic Loading**: Fetches `/maps/YYYY-MM-DD/city.json` for selected date
 - **Full Reset**: Loads that date's city and resets all game state (level, attempts, guesses)
 - **Error Handling**: Shows friendly message if no maps exist for selected date
@@ -77,7 +83,19 @@ After completing the daily game, players can play previous dates:
 - Track user's current attempt
 - Reveal next map level on incorrect guess
 
+### PWA (Progressive Web App) Support
+Full PWA implementation for installable app experience:
+- **Service Worker** (`public/sw.js`): Network-first caching strategy with offline fallback
+- **App Manifest** (`public/manifest.json`): App metadata, icons, theme colors
+- **Icons**: Three sizes (180×180 for iOS, 192×192, 512×512) with maskable support
+- **iOS Support**: Apple-specific meta tags for home screen installation
+- **Offline Mode**: Core app works offline after first visit
+- **Installable**: Can be installed on iOS, Android, desktop Chrome/Edge
+- **Theme Integration**: Matches game's dark theme (#1a1a2e)
+
 ### Utilities
+- `preview_cities.py` - Preview upcoming daily cities without generating maps
+- `icon-generator.html` - Generate PWA icons in all required sizes
 - Supporting tools as needed
 
 ## Tech Stack
@@ -97,11 +115,14 @@ After completing the daily game, players can play previous dates:
 - [x] Direct coordinate lookup (more accurate than name geocoding)
 - [x] Prefer street names over highway refs for better game clues
 - [x] Bonus round - population guessing with accuracy feedback
-- [x] Hints system - continent (Level 3) and country (Level 5) hints in separate row layout
+- [x] Hints system - country (Level 3) and state/region (Level 5) with full names
 - [x] Hints layout optimization - separate row preserves map size, larger fonts
+- [x] US state and UK region mappings for readable hint names
 - [x] Continent mapping for all countries in dataset
 - [x] Finish Web frontend - most already complete
-- [x] Play past dates feature - date picker modal after game over to play any previous date
+- [x] Play past dates feature - always-visible button + game over modal, with future date validation
+- [x] PWA support - service worker, manifest, icons for iOS/Android/desktop installation
+- [x] Icon generator tool for PWA icons (180×180, 192×192, 512×512)
 - [x] **RENAME PROJECT**: Citydle → Hidden Atlas
   - Update all documentation (README.md, CLAUDE.md, FRONTEND_GUIDE.md)
   - Update HTML title and meta tags
@@ -112,10 +133,9 @@ After completing the daily game, players can play previous dates:
 - [x] Deploy to Vercel or Netlify
 
 ### TODO
-- [ ] using "icon-generator.html" tool to generate icon for iPhone PWA
-- [ ] Generate maps for deployment (60-90 days)
+- [ ] Generate maps for deployment (60-90 days of content)
 - [ ] Set up automated map generation (GitHub Actions or cron)
-- [ ] Test deployed site with real gameplay
+- [ ] Test deployed PWA installation on iOS Safari and Android Chrome
 - [ ] Update README.md with live URL once deployed
 - [ ] Clean up combined road names (e.g., "I 77;US 21" → "I-77")
 
