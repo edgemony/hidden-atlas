@@ -102,8 +102,6 @@ After completing the daily game, players can play previous dates:
 - [x] Continent mapping for all countries in dataset
 - [x] Finish Web frontend - most already complete
 - [x] Play past dates feature - date picker modal after game over to play any previous date
-
-### TODO
 - [x] **RENAME PROJECT**: Citydle → Hidden Atlas
   - Update all documentation (README.md, CLAUDE.md, FRONTEND_GUIDE.md)
   - Update HTML title and meta tags
@@ -111,8 +109,11 @@ After completing the daily game, players can play previous dates:
   - Rename GitHub repository (do this manually on GitHub)
   - Update all internal references
   - Commit and push changes
+- [x] Deploy to Vercel or Netlify
+
+### TODO
+- [ ] using "icon-generator.html" tool to generate icon for iPhone PWA
 - [ ] Generate maps for deployment (60-90 days)
-- [ ] Deploy to Vercel or Netlify
 - [ ] Set up automated map generation (GitHub Actions or cron)
 - [ ] Test deployed site with real gameplay
 - [ ] Update README.md with live URL once deployed
