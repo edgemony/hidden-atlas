@@ -154,30 +154,72 @@ function showMessage(text, type = '') {
     }
 }
 
+// US State code to full name mapping
+const US_STATES = {
+    'AL': 'Alabama', 'AK': 'Alaska', 'AZ': 'Arizona', 'AR': 'Arkansas', 'CA': 'California',
+    'CO': 'Colorado', 'CT': 'Connecticut', 'DE': 'Delaware', 'FL': 'Florida', 'GA': 'Georgia',
+    'HI': 'Hawaii', 'ID': 'Idaho', 'IL': 'Illinois', 'IN': 'Indiana', 'IA': 'Iowa',
+    'KS': 'Kansas', 'KY': 'Kentucky', 'LA': 'Louisiana', 'ME': 'Maine', 'MD': 'Maryland',
+    'MA': 'Massachusetts', 'MI': 'Michigan', 'MN': 'Minnesota', 'MS': 'Mississippi', 'MO': 'Missouri',
+    'MT': 'Montana', 'NE': 'Nebraska', 'NV': 'Nevada', 'NH': 'New Hampshire', 'NJ': 'New Jersey',
+    'NM': 'New Mexico', 'NY': 'New York', 'NC': 'North Carolina', 'ND': 'North Dakota', 'OH': 'Ohio',
+    'OK': 'Oklahoma', 'OR': 'Oregon', 'PA': 'Pennsylvania', 'RI': 'Rhode Island', 'SC': 'South Carolina',
+    'SD': 'South Dakota', 'TN': 'Tennessee', 'TX': 'Texas', 'UT': 'Utah', 'VT': 'Vermont',
+    'VA': 'Virginia', 'WA': 'Washington', 'WV': 'West Virginia', 'WI': 'Wisconsin', 'WY': 'Wyoming',
+    'DC': 'District of Columbia'
+};
+
+// UK constituent countries mapping
+const UK_REGIONS = {
+    'ENG': 'England', 'SCT': 'Scotland', 'WLS': 'Wales', 'NIR': 'Northern Ireland'
+};
+
+// Get regional hint text based on country
+function getRegionalHint(city) {
+    if (!city.state) return null;
+
+    const country = (city.country || '').toLowerCase();
+
+    // US cities: show full state name
+    if (country.includes('united states') || country === 'usa' || country === 'us') {
+        // If state is already a full name, return as-is; otherwise map the code
+        return US_STATES[city.state] || city.state;
+    }
+
+    // UK cities: show constituent country
+    if (country.includes('united kingdom') || country === 'uk' || country === 'gb') {
+        return UK_REGIONS[city.state] || city.state;
+    }
+
+    // For other countries, return the admin code/state as-is
+    return city.state;
+}
+
 // Update hints based on current level
 function updateHints() {
     const hintsPanel = document.getElementById('hints-panel');
     const hint1 = document.getElementById('hint-1');
     const hint2 = document.getElementById('hint-2');
-    const continentEl = document.getElementById('hint-continent');
-    const countryEl = document.getElementById('hint-country');
+    const hint1Value = document.getElementById('hint-1-value');
+    const hint2Value = document.getElementById('hint-2-value');
 
     // Show hints panel if any hints are visible
     const showPanel = gameState.currentLevel >= 3;
     hintsPanel.classList.toggle('hidden', !showPanel);
 
-    // Hint 1: Continent (shown at level 3+, after 2nd wrong guess)
-    if (gameState.currentLevel >= 3 && gameState.correctCity?.continent) {
+    // Hint 1: Country (shown at level 3+, after 2nd wrong guess)
+    if (gameState.currentLevel >= 3 && gameState.correctCity?.country) {
         hint1.classList.remove('hidden');
-        continentEl.textContent = gameState.correctCity.continent;
+        hint1Value.textContent = gameState.correctCity.country;
     } else {
         hint1.classList.add('hidden');
     }
 
-    // Hint 2: Country (shown at level 5, after 4th wrong guess)
-    if (gameState.currentLevel >= 5 && gameState.correctCity?.country) {
+    // Hint 2: State/Region (shown at level 5, after 4th wrong guess)
+    const regionalHint = getRegionalHint(gameState.correctCity || {});
+    if (gameState.currentLevel >= 5 && regionalHint) {
         hint2.classList.remove('hidden');
-        countryEl.textContent = gameState.correctCity.country;
+        hint2Value.textContent = regionalHint;
     } else {
         hint2.classList.add('hidden');
     }
@@ -633,12 +675,15 @@ async function loadDateGame(dateStr) {
 // Setup date picker modal
 function setupDatePickerModal() {
     const modal = document.getElementById('date-picker-modal');
-    const btn = document.getElementById('past-game-btn');
+    const gameOverBtn = document.getElementById('past-game-btn');
+    const mainBtn = document.getElementById('past-date-btn');
     const close = modal.querySelector('.close');
     const playBtn = document.getElementById('date-picker-play');
     const dateInput = document.getElementById('date-picker-input');
 
-    btn.addEventListener('click', showDatePicker);
+    // Both buttons open the date picker
+    gameOverBtn.addEventListener('click', showDatePicker);
+    mainBtn.addEventListener('click', showDatePicker);
 
     playBtn.addEventListener('click', () => {
         loadDateGame(dateInput.value);

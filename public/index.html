@@ -10,7 +10,8 @@
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json">
 
-    <!-- iOS PWA Support -->
+    <!-- PWA Mobile Support -->
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Hidden Atlas">
@@ -48,11 +49,11 @@
         <div id="hints-panel" class="hints-panel hidden">
             <div id="hint-1" class="hint hidden">
                 <span class="hint-label">Hint 1</span>
-                <span class="hint-value">Continent: <strong id="hint-continent"></strong></span>
+                <span class="hint-value">Country: <strong id="hint-1-value"></strong></span>
             </div>
             <div id="hint-2" class="hint hidden">
                 <span class="hint-label">Hint 2</span>
-                <span class="hint-value">Country: <strong id="hint-country"></strong></span>
+                <span class="hint-value">State/Region: <strong id="hint-2-value"></strong></span>
             </div>
         </div>
 
@@ -145,6 +146,7 @@
 
         <div class="how-to-play">
             <button id="help-btn">How to Play</button>
+            <button id="past-date-btn">Play Past Date</button>
         </div>
 
         <div id="help-modal" class="modal hidden">

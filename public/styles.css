@@ -470,9 +470,14 @@ h1 {
 .how-to-play {
     text-align: center;
     margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
-#help-btn {
+#help-btn,
+#past-date-btn {
     padding: 10px 20px;
     background-color: transparent;
     color: var(--text-dim);
@@ -482,7 +487,8 @@ h1 {
     transition: all 0.3s;
 }
 
-#help-btn:hover {
+#help-btn:hover,
+#past-date-btn:hover {
     color: var(--cyan);
     border-color: var(--cyan);
 }

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'hidden-atlas-v1';
+const CACHE_NAME = 'hidden-atlas-v4';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -67,6 +67,13 @@ self.addEventListener('fetch', (event) => {
           if (event.request.mode === 'navigate') {
             return caches.match('/index.html');
           }
+
+          // For other requests (images, etc), return a network error
+          // This allows the app to handle the error properly
+          return new Response('Network error', {
+            status: 408,
+            statusText: 'Network error'
+          });
         });
       })
   );

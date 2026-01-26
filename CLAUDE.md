@@ -132,3 +132,11 @@ After completing the daily game, players can play previous dates:
 - Generate next 7 days: `python generate_daily_maps.py --days 7`
 - Test city selector: `python city_selector.py`
 - Maps output to: `public/maps/YYYY-MM-DD/` with `level1-5.png` and `city.json`
+
+### UI Consistency Rules
+**CRITICAL**: When adding new buttons or UI elements, ALWAYS match existing styles:
+- Check what similar elements look like first (e.g., if adding a button, find an existing button)
+- Copy the exact CSS styling approach (ID selectors, class names, etc.)
+- Never add class attributes that might override ID-based styles
+- Test that new elements visually match existing ones before committing
+- Common mistake: Adding `class="foo-btn"` when styling via `#foo-btn` ID - this can cause style conflicts
