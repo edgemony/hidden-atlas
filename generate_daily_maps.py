@@ -78,13 +78,13 @@ def generate_maps_for_date(date, output_dir="public/maps"):
 
 def generate_next_n_days(n=7, output_dir="public/maps"):
     """Generate maps for the next N days."""
-    today = datetime.now()
+    today = datetime.now().date()
 
     print(f"Generating maps for the next {n} days...\n")
 
     for i in range(n):
-        date = today + timedelta(days=i)
-        generate_maps_for_date(date, output_dir)
+        target_date = today + timedelta(days=i)
+        generate_maps_for_date(target_date, output_dir)
         print()  # Blank line between days
 
 

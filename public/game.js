@@ -584,9 +584,9 @@ function showDatePicker() {
     const dateInput = document.getElementById('date-picker-input');
     const errorEl = document.getElementById('date-picker-error');
 
-    // Set max date to today
-    const today = new Date();
-    dateInput.max = today.toISOString().split('T')[0];
+    // Set max date to today (UTC, matching getTodayDate logic)
+    const today = getTodayDate();
+    dateInput.max = today;
 
     // Clear any previous error
     errorEl.classList.add('hidden');
@@ -602,6 +602,17 @@ async function loadDateGame(dateStr) {
     // Validate date format
     if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
         errorEl.textContent = 'Please select a valid date';
+        errorEl.classList.remove('hidden');
+        return;
+    }
+
+    // Validate date is not in the future (using UTC to match getTodayDate)
+    const selectedDate = new Date(dateStr + 'T00:00:00Z');
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+
+    if (selectedDate > today) {
+        errorEl.textContent = 'Cannot play future dates - please select today or earlier';
         errorEl.classList.remove('hidden');
         return;
     }
