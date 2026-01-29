@@ -31,7 +31,7 @@
         <div class="game-info">
             <div class="info-item">
                 <span class="label">Attempt:</span>
-                <span class="value" id="attempt">1/5</span>
+                <span class="value" id="attempt">1/6</span>
             </div>
             <div class="info-item">
                 <span class="label">Level:</span>
@@ -43,6 +43,7 @@
             <div class="map-container">
                 <img id="map-image" src="" alt="City map - Level 1">
                 <div id="loading" class="loading">Loading map...</div>
+                <button id="view-toggle-btn" class="view-toggle-btn hidden">Show Map</button>
             </div>
         </div>
 
@@ -132,6 +133,11 @@
                         <p class="map-description">Full Map</p>
                         <img src="" alt="Level 5" class="grid-map-image">
                     </div>
+                    <div class="map-item hidden" data-level="6">
+                        <h3>Level 6</h3>
+                        <p class="map-description">City Skyline</p>
+                        <img src="" alt="Level 6" class="grid-map-image">
+                    </div>
                 </div>
             </div>
         </div>
@@ -154,13 +160,14 @@
                 <span class="close">&times;</span>
                 <h2>How to Play</h2>
                 <div class="instructions">
-                    <p>Guess the featured city in 5 tries or less!</p>
+                    <p>Guess the featured city in 6 tries or less!</p>
                     <ol>
                         <li><strong>Level 1:</strong> Water bodies + major highways (abstract)</li>
                         <li><strong>Level 2:</strong> Full street grid added</li>
                         <li><strong>Level 3:</strong> Parks (green areas) revealed</li>
                         <li><strong>Level 4:</strong> Buildings + top 3 major roads highlighted</li>
                         <li><strong>Level 5:</strong> Full map with labeled roads</li>
+                        <li><strong>Level 6:</strong> City skyline photo (if available)</li>
                     </ol>
                     <p>Each incorrect guess reveals the next level. Try to identify the city with as few attempts as possible!</p>
                     <p class="daily-note">A new city is featured every day at midnight UTC.</p>

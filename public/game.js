@@ -2,7 +2,7 @@
 let gameState = {
     currentLevel: 1,
     attempts: 0,
-    maxAttempts: 5,
+    maxAttempts: 6,
     guesses: [],
     gameOver: false,
     won: false,
@@ -10,6 +10,10 @@ let gameState = {
     todayDate: null,
     bonusRoundComplete: false
 };
+
+// Track whether level 6 skyline image exists and current view mode
+let level6Available = false;
+let showingSkyline = false;
 
 // Get today's date in YYYY-MM-DD format (UTC)
 function getTodayDate() {
@@ -71,12 +75,53 @@ async function fetchCityData() {
 function loadMapImage() {
     const mapImage = document.getElementById('map-image');
     const loading = document.getElementById('loading');
+    const toggleBtn = document.getElementById('view-toggle-btn');
 
     loading.style.display = 'block';
     mapImage.classList.remove('loaded');
 
-    // Map image path: /maps/YYYY-MM-DD/level1.png
-    const imagePath = `/maps/${gameState.todayDate}/level${gameState.currentLevel}.png`;
+    // At level 6, we need special handling
+    if (gameState.currentLevel === 6) {
+        // Try to load level 6 (skyline image)
+        const level6Path = `/maps/${gameState.todayDate}/level6.png`;
+
+        // Check if level 6 exists
+        fetch(level6Path, { method: 'HEAD' })
+            .then(response => {
+                if (response.ok) {
+                    level6Available = true;
+                    showingSkyline = true;
+                    toggleBtn.classList.remove('hidden');
+                    updateToggleButton();
+                    loadImage(level6Path, 'City skyline');
+                } else {
+                    // Fallback to level 5
+                    level6Available = false;
+                    showingSkyline = false;
+                    toggleBtn.classList.add('hidden');
+                    loadImage(`/maps/${gameState.todayDate}/level5.png`, 'City map - Level 5');
+                }
+            })
+            .catch(() => {
+                // Fallback to level 5 on error
+                level6Available = false;
+                showingSkyline = false;
+                toggleBtn.classList.add('hidden');
+                loadImage(`/maps/${gameState.todayDate}/level5.png`, 'City map - Level 5');
+            });
+    } else {
+        // Normal levels 1-5
+        toggleBtn.classList.add('hidden');
+        showingSkyline = false;
+        const imagePath = `/maps/${gameState.todayDate}/level${gameState.currentLevel}.png`;
+        loadImage(imagePath, `City map - Level ${gameState.currentLevel}`);
+    }
+}
+
+// Helper to load and display an image
+function loadImage(imagePath, altText) {
+    const mapImage = document.getElementById('map-image');
+    const loading = document.getElementById('loading');
 
     mapImage.onload = () => {
         loading.style.display = 'none';
@@ -89,7 +134,31 @@ function loadMapImage() {
     };
 
     mapImage.src = imagePath;
-    mapImage.alt = `City map - Level ${gameState.currentLevel}`;
+    mapImage.alt = altText;
+}
+
+// Toggle between skyline and map view at level 6
+function toggleLevel6View() {
+    if (!level6Available || gameState.currentLevel !== 6) return;
+
+    showingSkyline = !showingSkyline;
+    updateToggleButton();
+
+    if (showingSkyline) {
+        loadImage(`/maps/${gameState.todayDate}/level6.png`, 'City skyline');
+    } else {
+        loadImage(`/maps/${gameState.todayDate}/level5.png`, 'City map - Level 5');
+    }
+}
+
+// Update toggle button text
+function updateToggleButton() {
+    const toggleBtn = document.getElementById('view-toggle-btn');
+    if (showingSkyline) {
+        toggleBtn.textContent = 'Show Map';
+    } else {
+        toggleBtn.textContent = 'Show Skyline';
+    }
 }
 
 // Update UI
@@ -266,7 +335,7 @@ async function handleGuess() {
         showGameOver();
     } else {
         // Wrong guess, advance to next level
-        gameState.currentLevel = Math.min(gameState.currentLevel + 1, 5);
+        gameState.currentLevel = Math.min(gameState.currentLevel + 1, 6);
         loadMapImage();
         updateHints();
         showMessage('Not quite! Try again with more detail...', 'error');
@@ -492,10 +561,28 @@ function updateCountdown() {
 function showAllMaps() {
     const modal = document.getElementById('all-maps-modal');
 
-    // Load all map images
+    // Load all map images (1-5)
     for (let level = 1; level <= 5; level++) {
         const img = modal.querySelector(`[data-level="${level}"] img`);
         img.src = `/maps/${gameState.todayDate}/level${level}.png`;
+    }
+
+    // Handle level 6 (skyline) - only show if it exists
+    const level6Item = modal.querySelector('[data-level="6"]');
+    if (level6Item) {
+        const level6Path = `/maps/${gameState.todayDate}/level6.png`;
+        fetch(level6Path, { method: 'HEAD' })
+            .then(response => {
+                if (response.ok) {
+                    level6Item.classList.remove('hidden');
+                    level6Item.querySelector('img').src = level6Path;
+                } else {
+                    level6Item.classList.add('hidden');
+                }
+            })
+            .catch(() => {
+                level6Item.classList.add('hidden');
+            });
     }
 
     modal.classList.remove('hidden');
@@ -805,6 +892,7 @@ async function initGame() {
 
     document.getElementById('share-btn').addEventListener('click', shareResults);
     document.getElementById('replay-btn').addEventListener('click', resetGame);
+    document.getElementById('view-toggle-btn').addEventListener('click', toggleLevel6View);
 
     setupHelpModal();
     setupAllMapsModal();

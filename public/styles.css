@@ -170,6 +170,33 @@ h1 {
     font-size: 1.1em;
 }
 
+/* Toggle button for skyline/map view at level 6 */
+.view-toggle-btn {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    padding: 10px 20px;
+    font-size: 0.95em;
+    font-weight: 600;
+    background-color: var(--cyan);
+    color: var(--navy);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.view-toggle-btn:hover {
+    transform: translateY(-2px);
+    background-color: var(--coral);
+}
+
+.view-toggle-btn.hidden {
+    display: none;
+}
+
 .game-controls {
     margin-bottom: 30px;
 }
